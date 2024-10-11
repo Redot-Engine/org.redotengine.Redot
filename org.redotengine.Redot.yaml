@@ -1,4 +1,4 @@
-app-id: org.godotengine.Godot
+app-id: org.redotengine.Redot
 runtime: org.freedesktop.Sdk
 runtime-version: &runtime-version '24.08'
 sdk: org.freedesktop.Sdk
@@ -8,7 +8,7 @@ add-extensions:
     version: *runtime-version
     no-autodownload: false
     autodelete: false
-command: godot
+command: redot
 
 build-options:
   arch:
@@ -126,32 +126,32 @@ modules:
     build-commands:
       - pip3 install --no-index --no-build-isolation --prefix=/app .
 
-  - name: godot-tools
+  - name: redot-tools
     buildsystem: simple
 
     sources:
       - type: archive
-        sha256: 751e55bfad8e04b846f9cf7b6eb80e058986a2cb1b103fc0fe6a4d8526a20e56
-        url: https://github.com/godotengine/godot/releases/download/4.3-stable/godot-4.3-stable.tar.xz
-        x-checker-data:
-          type: anitya
-          project-id: 373975
-          url-template: https://github.com/godotengine/godot/releases/download/$version-stable/godot-$version-stable.tar.xz
+        sha256: 9666e705375d46ef1ea0bd5495f49fd53acd53b7b9e862906b176816d0817c80
+        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/2024101114.tar.gz
+        # x-checker-data:
+        #   type: anitya
+        #   project-id: 373975
+        #   url-template: https://github.com/Redot-Engine/redot-engine/releases/download/$version/redot-linuxbsd.zip
 
       - type: script
-        dest-filename: godot.sh
+        dest-filename: redot.sh
         commands:
           - export APPDATA="$XDG_DATA_HOME"
           - if [ -f /app/jdk/enable.sh ]; then source /app/jdk/enable.sh; fi
-          - /app/bin/godot-bin "$@"
+          - /app/bin/redot-bin "$@"
 
       - type: file
-        path: org.godotengine.Godot.appdata.xml
+        path: org.redotengine.Redot.appdata.xml
 
     build-commands:
       - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
-      - install -D -m755 bin/godot.linuxbsd.editor.* /app/bin/godot-bin
-      - install -D -m755 godot.sh /app/bin/godot
+      - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
+      - install -D -m755 redot.sh /app/bin/redot
       - desktop-file-edit --set-icon=$FLATPAK_ID misc/dist/linux/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.desktop /app/share/applications/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.xml /app/share/mime/packages/$FLATPAK_ID.xml
