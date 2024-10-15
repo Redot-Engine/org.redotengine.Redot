@@ -138,6 +138,10 @@ modules:
         #   project-id: 373975
         #   url-template: https://github.com/Redot-Engine/redot-engine/releases/download/$version/redot-linuxbsd.zip
 
+      - type: archive
+        sha256: 0f36e32717b28c6ed742ab77cad0d17cb3b5e048801213307fc931f66d93ee7f
+        url: https://github.com/Redot-Engine/redot-engine/releases/download/2024101114/redot-linuxbsd.zip
+
       - type: script
         dest-filename: redot.sh
         commands:
@@ -149,15 +153,17 @@ modules:
         path: org.redotengine.Redot.appdata.xml
 
     build-commands:
+      # - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
+      # - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
+      - install -D -m755 redot.linuxbsd.editor.* /app/bin/redot-bin
+      - install -D -m755 redot.sh /app/bin/redot
+      # TODO remove once rebranding is released with proper linux dist files
       - for i in misc/dist/linux/org.godotengine.Godot.*; do
           bn=$(basename $i);
           ext=$(sed s/org.godotengine.Godot.// <<< $bn);
           parendir=$(dirname $i);
           cp $i $parendir/$FLATPAK_ID.$ext;
         done
-      - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
-      - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
-      - install -D -m755 redot.sh /app/bin/redot
       - desktop-file-edit --set-icon=$FLATPAK_ID misc/dist/linux/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.desktop /app/share/applications/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.xml /app/share/mime/packages/$FLATPAK_ID.xml
