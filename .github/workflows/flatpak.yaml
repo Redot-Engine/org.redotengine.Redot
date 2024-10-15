@@ -17,6 +17,6 @@ jobs:
         submodules: true
     - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
       with:
-        bundle: palette.flatpak
+        bundle: Redot.flatpak
         manifest-path: org.redotengine.Redot.yaml
         cache-key: flatpak-builder-${{ github.sha }}
