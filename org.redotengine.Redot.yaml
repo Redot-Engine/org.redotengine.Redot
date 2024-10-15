@@ -149,6 +149,12 @@ modules:
         path: org.redotengine.Redot.appdata.xml
 
     build-commands:
+      - for i in misc/dist/linux/org.godotengine.Godot.*; do
+          bn=$(basename $i);
+          ext=$(sed s/org.godotengine.Godot.// <<< $bn);
+          parendir=$(dirname $i);
+          cp $i $parendir/$FLATPAK_ID.$ext;
+        done
       - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
       - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
       - install -D -m755 redot.sh /app/bin/redot
