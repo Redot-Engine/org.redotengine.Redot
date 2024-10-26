@@ -7,11 +7,11 @@ This Flatpak is not yet available on Flathub, but you can install it manually.
 To download the file, you can use one of the following:
 
 1. **Download manually** - Use
-   [this link](https://github.com/chenasraf/org.redotengine.Redot/releases/tag/v4.4-pre), and download the
+   [this link](https://github.com/chenasraf/org.redotengine.Redot/releases/tag/v4.3-beta.1), and download the
    artifact called `Redot-x86_64.zip`.
 1. **Download using curl**
    ```bash
-   curl https://github.com/chenasraf/org.redotengine.Redot/releases/download/v4.4-pre/Redot-x86_64.zip > Redot-x86_64.zip
+   curl https://github.com/chenasraf/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot-x86_64.zip > Redot-x86_64.zip
    ```
 
 Then, unzip it and install to flatpak from file:

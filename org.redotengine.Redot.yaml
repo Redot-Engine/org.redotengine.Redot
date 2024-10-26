@@ -139,8 +139,8 @@ modules:
         #   url-template: https://github.com/Redot-Engine/redot-engine/releases/download/$version/redot-linuxbsd.zip
 
       - type: archive
-        sha256: 0f36e32717b28c6ed742ab77cad0d17cb3b5e048801213307fc931f66d93ee7f
-        url: https://github.com/Redot-Engine/redot-engine/releases/download/2024101114/redot-linuxbsd.zip
+        sha256: 758daf31d5a20bcaecb49452b6760c2bff0c6f91174146f3e815a174fedf9a94
+        url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-beta.1/Redot_v4.3-beta.1_linux.x86_64.zip
 
       - type: script
         dest-filename: redot.sh
@@ -155,7 +155,7 @@ modules:
     build-commands:
       # - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
       # - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
-      - install -D -m755 redot.linuxbsd.editor.* /app/bin/redot-bin
+      - install -D -m755 Redot_*_linux.* /app/bin/redot-bin
       - install -D -m755 redot.sh /app/bin/redot
       # TODO remove once rebranding is released with proper linux dist files
       - for i in misc/dist/linux/org.godotengine.Godot.*; do
