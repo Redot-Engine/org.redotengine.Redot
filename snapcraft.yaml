@@ -1,0 +1,200 @@
+name: redot
+confinement: strict
+base: core22
+adopt-info: metainfo
+architectures:
+  - build-on: amd64
+source-code: https://github.com/Redot-Engine/org.redotengine.Redot
+icon: icon.svg
+license: MIT
+title: Redot
+type: app
+
+environment:
+  HOME: $SNAP_USER_COMMON
+  VK_ICD_FILENAMES: /var/lib/snapd/lib/vulkan/icd.d/nvidia_icd.json:$SNAP/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:$SNAP/usr/share/vulkan/icd.d/intel_icd.x86_64.json
+
+package-repositories:
+  - type: apt
+    url: http://archive.ubuntu.com/ubuntu/
+    suites: [jammy]
+    components: [main, universe]
+    architectures: [amd64]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    key-server: keyserver.ubuntu.com
+
+parts:
+
+  redot-src:
+    plugin: nil
+    source: https://github.com/Redot-Engine/redot-engine.git
+    parse-info: [meta/org.redotengine.Redot.appdata.xml]
+    source-branch: 4.3
+    override-build: |
+      craftctl default
+      cp -r misc/dist/linux $CRAFT_PART_INSTALL/meta
+      cp icon.svg $CRAFT_PART_INSTALL/icon.svg
+      cp version.py $CRAFT_PART_INSTALL/version.py
+    stage:
+      - icon.svg
+      - meta
+      - version.py
+    prime:
+      - -version.py
+
+  redot:
+    plugin: dump
+    source: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-beta.1/Redot_v4.3-beta.1_linux.x86_64.zip
+    organize:
+      Redot_*: redot
+    stage:
+      - redot
+
+  redot-runtime:
+    plugin: nil
+    stage-packages:
+      - libgl1-mesa-glx
+      - libpulse0
+      - libudev1
+      - libx11-6
+      - libxcursor1
+      - libxi6
+      - libxinerama1
+      - libxrandr2
+      - libgl1-mesa-dri
+
+  metainfo:
+    plugin: nil
+    source: .
+    source-type: local
+    after: [redot, redot-src]
+    parse-info: [org.redotengine.Redot.appdata.xml]
+    build-environment:
+      - PYTHONPATH: $CRAFT_STAGE
+    override-build: |
+      craftctl set version=`python3 -c "import version; print(f'{version.major}.{version.minor}.{version.patch}', end='')"`
+      craftctl set grade=`python3 -c "import version; status = 'stable' if version.status == 'stable' else 'devel';  print(f'{status}', end='')"`
+
+  alsa-mixin:
+    plugin: dump
+    source: https://github.com/diddlesnaps/snapcraft-alsa.git
+    source-subdir: snapcraft-assets
+    build-packages:
+      - libasound2-dev
+    stage-packages:
+      - libasound2
+      - libasound2-plugins
+    stage:
+      - etc/asound.conf
+      - snap/command-chain/alsa-launch
+      - usr/bin/yad*
+      - usr/lib/*/alsa-lib
+      - usr/lib/*/libFLAC*
+      - usr/lib/*/libasound*
+      - usr/lib/*/libasyncns*
+      - usr/lib/*/libdnsfile*
+      - usr/lib/*/libjack*
+      - usr/lib/*/libpulse*
+      - usr/lib/*/libsamplerate*
+      - usr/lib/*/libsndfile*
+      - usr/lib/*/libspeex*
+      - usr/lib/*/libvorbis*
+      - usr/lib/*/pulseaudio
+      - usr/share/alsa
+
+  vulkan:
+    plugin: nil
+    stage-packages:
+      - mesa-vulkan-drivers
+      - libwayland-client0
+    prime:
+      - usr/bin/mesa-overlay-control.py
+      - usr/lib/*/libLLVM*
+      - usr/lib/*/libVkLayer*
+      - usr/lib/*/libvulkan*
+      - usr/lib/*/libxcb-randr*
+      - usr/lib/x86_64-linux-gnu/libwayland-client*
+      - usr/share/drirc.d
+      - usr/share/vulkan
+
+  # Debugging
+  tools:
+    plugin: nil
+    stage-packages:
+      - vulkan-tools
+      - mesa-utils
+      - pciutils
+    prime:
+      - usr/bin/glxgears*
+      - usr/bin/glxinfo*
+      - usr/bin/lspci
+      - usr/bin/vkcube
+      - usr/bin/vkcubepp
+      - usr/lib/*/libpci*
+
+layout:
+  # Audio
+  /usr/lib/x86_64-linux-gnu/alsa-lib:
+    bind: $SNAP/usr/lib/x86_64-linux-gnu/alsa-lib
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
+  /usr/share/vulkan:
+    bind: $SNAP/usr/share/vulkan
+  # Vulkan
+  /usr/lib/x86_64-linux-gnu/libvulkan_intel.so:
+    bind-file: $SNAP/usr/lib/x86_64-linux-gnu/libvulkan_intel.so
+  /usr/lib/x86_64-linux-gnu/libvulkan_lvp.so:
+    bind-file: $SNAP/usr/lib/x86_64-linux-gnu/libvulkan_lvp.so
+  /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so:
+    bind-file: $SNAP/usr/lib/x86_64-linux-gnu/libvulkan_radeon.so
+  /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0:
+    bind-file: $SNAP/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0
+  /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0
+  /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0:
+    bind-file: $SNAP/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+  /usr/lib/x86_64-linux-gnu/libxcb.so:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+  /usr/lib/x86_64-linux-gnu/libxcb.so.1:
+    symlink: $SNAP/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+  /etc/ld.so.cache:
+    bind-file: $SNAP_DATA/etc/ld.so.cache
+
+apps:
+  redot:
+    command-chain: [snap/command-chain/alsa-launch]
+    command: redot
+    common-id: org.redotengine.Redot
+    plugs:
+      - alsa
+      - audio-playback
+      - audio-record
+      - browser-support
+      - daemon-notify
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - hardware-observe
+      - home
+      - io-ports-control
+      - joystick
+      - kvm
+      - libvirt
+      - mount-observe
+      - network
+      - network-bind
+      - network-manager
+      - opengl
+      - pulseaudio
+      - removable-media
+      - screen-inhibit-control
+      - wayland
+      - x11
+
+  # For debugging
+  vkcube:
+    command: usr/bin/vkcube
+  glxinfo:
+    command: usr/bin/glxinfo
+  glxgears:
+    command: usr/bin/glxgears

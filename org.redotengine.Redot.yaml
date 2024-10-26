@@ -130,14 +130,12 @@ modules:
     buildsystem: simple
 
     sources:
+      # Source code tarball
       - type: archive
-        sha256: 9666e705375d46ef1ea0bd5495f49fd53acd53b7b9e862906b176816d0817c80
-        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/2024101114.tar.gz
-        # x-checker-data:
-        #   type: anitya
-        #   project-id: 373975
-        #   url-template: https://github.com/Redot-Engine/redot-engine/releases/download/$version/redot-linuxbsd.zip
+        sha256: 378f7805ecb5cb97fecb625fa11938c57c8d908911f6dad6b9b58e662b73f5f7
+        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/redot-4.3-beta.1.tar.gz
 
+      # Binary tarball
       - type: archive
         sha256: 758daf31d5a20bcaecb49452b6760c2bff0c6f91174146f3e815a174fedf9a94
         url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-beta.1/Redot_v4.3-beta.1_linux.x86_64.zip
@@ -153,8 +151,6 @@ modules:
         path: org.redotengine.Redot.appdata.xml
 
     build-commands:
-      # - python3 /app/bin/scons $SCONS_FLAGS $SCONS_FLAGS_EXTRA target=editor -j "$FLATPAK_BUILDER_N_JOBS"
-      # - install -D -m755 bin/redot.linuxbsd.editor.* /app/bin/redot-bin
       - install -D -m755 Redot_*_linux.* /app/bin/redot-bin
       - install -D -m755 redot.sh /app/bin/redot
       # TODO remove once rebranding is released with proper linux dist files
