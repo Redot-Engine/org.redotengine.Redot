@@ -1,105 +1,153 @@
-# Flatpak for Redot Engine
+# Redot Engine Installer (Flatpak & Snap)
 
-## Installation
+This repository provides multiple installation options for Redot Engine, currently supporting both
+**Flatpak** and **Snap** mechanisms.
 
-This Flatpak is not yet available on Flathub, but you can install it manually.
+## Installation Options
 
-To download the file, you can use one of the following:
+### Flatpak Installation
 
-1. **Download manually** - Use
-   [this link](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.1), and download the
-   artifact called `Redot-x86_64.zip`.
-1. **Download using curl**
+This version of Redot via Flatpak is not available on Flathub yet, but you can install it manually
+by downloading the necessary files.
+
+#### Steps to Install Flatpak Version:
+
+**1. Download the Flatpak artifact:**
+
+Choose one of the following download methods:
+
+- **Manual Download**:
+
+  Visit
+  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.1)
+  and download the file named `Redot-x86_64.zip`.
+
+- **Download via `curl`**:
+
+  ```bash
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot-x86_64.zip > Redot-x86_64.zip
+  ```
+
+**2. Install the Flatpak:**
+
+- Unzip and install the downloaded `.flatpak` file:
+
    ```bash
-   curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot-x86_64.zip > Redot-x86_64.zip
+   unzip Redot-x86_64.zip
+   flatpak install --user Redot-x86_64.flatpak
    ```
 
-Then, unzip it and install to flatpak from file:
+#### Updating the Flatpak Version
+
+For now, Flatpak updates aren't automatic. You'll need to manually download and install the latest
+file each time a new version is released, following the above procedure.
+
+#### Additional Steps for Using External Tools in Flatpak:
+
+- **Using Blender**: Redot can integrate with Blender installed on your system. Follow the
+  [Blender Integration for Flatpak Users](#using-blender-with-flatpak).
+- **Using External Script Editor**: Learn how to configure external editors like Visual Studio Code
+  to work within the Flatpak version in the
+  [External Editor Configuration for Flatpak](#using-an-external-script-editor-in-flatpak).
+
+### Snap Installation
+
+This version of Redot via Snap is not available on the Snap Store yet, but you can install it
+manually by downloading the necessary files.
+
+#### Steps to Install Snap Version:
+
+**1. Download the Snap Artifact:**
+
+- **Manual Download**:
+
+  Head over to
+  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.1)
+  to download the `Redot.snap` file.
+
+- **Download using `curl`**:
+
+  ```bash
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot.snap > Redot.snap
+  ```
+
+**2. Install the Snap:**
+
+- Install the Snap file by running:
 
 ```bash
-unzip Redot-x86_64.zip
-flatpak install --user Redot-x86_64.flatpak
+sudo snap install --dangerous Redot.snap
 ```
 
-**Looking to package a Redot project as a Flatpak ?**
-See [flathub/org.redotengine.redot.BaseApp](https://github.com/flathub/org.redotengine.redot.BaseApp).
+The `--dangerous` flag is required because the file is manually downloaded and not from the Snap
+Store.
 
-## Updating
+#### Updating the Snap Version
 
-This Flatpak follows the latest stable Redot version.
-To update it, run the following command in a terminal:
+For now, snap updates aren't automatic. You'll need to manually download and install the latest
+`.snap` file each time a new version is released, following the above procedure.
 
-```bash
-flatpak update
-```
+### Choosing Between Flatpak and Snap
 
-## Using Blender
+Both formats offer similar capabilities in terms of functionality. Flatpak provides more flexibility
+with external editor and tool integration, while Snap users may experience quicker installs. Choose
+the one based on your system preference or distribution support.
 
-This version of Redot is built with special
-[permissions](https://github.com/flathub/org.redotengine.Redot/blob/394f81c3310b82f5069ea917bb21f49888f818c6/org.redotengine.Redot.yaml#L46)
-to be able to run commands on the host system outside of the sandbox via
-[flatpak-spawn](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-spawn).
-This is done by prefixing the command with `flatpak-spawn --host`. For example, if you want to run `gnome-terminal` on
-the host system outside of the sandbox, you can do so by running `flatpak-spawn --host gnome-terminal`.
+---
 
-Redot expects the Blender executable to be named `blender` (lowercase), so a script exactly named `blender` that
-executes Blender via `flatpak-spawn --host` should be created. Below are two [Bash](https://www.gnu.org/software/bash/)
-scripts which may need to be modified depending on your [shell](https://en.wikipedia.org/wiki/Shell_(computing)) and
-how Blender is installed.
+## Integration with External Tools
 
-### Bash script assuming Blender is installed in `PATH` (e.g. using distribution packages)
+### Using Blender with Flatpak
+
+Redot can be integrated with Blender for project asset creation. Users of the Flatpak version need
+to configure Blender using the following setup.
+
+If Blender is installed from the system (e.g., using distribution packages):
 
 ```bash
 #!/bin/bash
-
 flatpak-spawn --host blender "$@"
 ```
 
-### Bash script assuming Blender is installed from Flathub
+If Blender is installed from Flathub:
 
 ```bash
 #!/bin/bash
-
 flatpak-spawn --host flatpak run org.blender.Blender "$@"
 ```
 
-Make sure your script is executable using `chmod +x blender`. Use the directory path containing your script in the
-Editor Settings (**Filesystem > Import > Blender > Blender 3 Path**).
+After saving this script, ensure it's executable using `chmod +x blender`. In Redot, navigate to
+**Editor Settings > Filesystem > Import > Blender > Blender 3 Path** and set the directory to the
+location of the `blender` script.
 
-## Using an external script editor
+### Using an External Script Editor in Flatpak
 
-This version of Redot is built with special [permissions](https://github.com/flathub/org.redotengine.Redot/blob/394f81c3310b82f5069ea917bb21f49888f818c6/org.redotengine.Redot.yaml#L46) to be able to run commands on the host system outside of the sandbox via [flatpak-spawn](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-spawn). This is done by prefixing the command with `flatpak-spawn --host`. For example, if you want to run `gnome-terminal` on the host system outside of the sandbox, you can do so by running `flatpak-spawn --host gnome-terminal`.
+Redot can spawn external editors from inside the Flatpak sandbox. You must prefix the command with
+`flatpak-spawn --host`.
 
-To spawn an external editor in Redot, all command line arguments must be split from the commands path in the
-[external editor preferences](https://docs.redotengine.org/en/latest/getting_started/editor/external_editor.html) and
-because the command needs to be prefixed with `"flatpak-spawn --host"`, the **Exec Path** is replaced by `flatpak-spawn`
-and the **Exec Flags** are prefixed by `--host [command path]`.
+For instance, if you're using Visual Studio Code, configure it as follows:
 
-For example, for Visual Studio Code, where your
-[external editor preferences](https://docs.redotengine.org/en/3.2/getting_started/editor/external_editor.html) would
-*normally* look like this...
+- Normally:
 
-```text
-Exec Path:  code
-Exec Flags: --reuse-window {project} --goto {file}:{line}:{col}
-```
+  ```text
+  Exec Path:  code
+  Exec Flags: --reuse-window {project} --goto {file}:{line}:{col}
+  ```
 
-...it should look like this **inside the Flatpak sandbox**:
+- With Flatpak:
 
-```text
-Exec Path:  flatpak-spawn
-Exec Flags: --host code --reuse-window {project} --goto {file}:{line}:{col}
-```
+  ```text
+  Exec Path:  flatpak-spawn
+  Exec Flags: --host code --reuse-window {project} --goto {file}:{line}:{col}
+  ```
 
-## Limitations
+This ensures that the editor is launched outside the sandbox.
 
-- ~For C#/Mono support, install [org.redotengine.RedotSharp](https://flathub.org/apps/org.redotengine.RedotSharp) instead.~ Not yet supported.
+## Limitations (For Flatpak & Snap)
 
-## Building from source
+- C#/Mono support via org.redotengine.RedotSharp is **not yet supported** at this time.
 
-Install Git, follow the
-[flatpak-builder setup guide](https://docs.flatpak.org/en/latest/first-build.html)
-then enter the following commands in a terminal:
+## Building from the Source (Flatpak)
 
 ```bash
 git clone --recursive https://github.com/Redot-Engine/org.redotengine.Redot.git
@@ -110,8 +158,21 @@ flatpak install --user flathub org.freedesktop.Sdk//24.08 -y
 flatpak-builder --force-clean --install --user -y builddir org.redotengine.Redot.yaml
 ```
 
-If all goes well, the Flatpak will be installed after building. You can then
-run it using your desktop environment's application launcher.
+1. Ensure you have Git installed. Follow the
+   [Flatpak builder setup guide](https://docs.flatpak.org/en/latest/first-build.html).
 
-You can speed up incremental builds by installing [ccache](https://ccache.dev/)
-and specifying `--ccache` in the flatpak-builder command line (before `builddir`).
+2. Clone and prepare the repository:
+
+   ```bash
+   git clone --recursive https://github.com/Redot-Engine/org.redotengine.Redot.git
+   cd org.redotengine.Redot/
+   git submodule init
+   git submodule update
+   flatpak install --user flathub org.freedesktop.Sdk//24.08 -y
+   ```
+
+3. Build and install the Flatpak (using ccache for faster builds):
+
+   ```bash
+   flatpak-builder --force-clean --install --user --ccache -y builddir org.redotengine.Redot.yaml
+   ```
