@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This file is intended for local testing of the Flatpak build.
+# It is NOT the same script used to build the actual Flatpak.
+
 apt install flatpak flatpak-builder gsettings-desktop-schemas appstream \
   libglib2.0-dev libjson-glib-dev libcurl4-openssl-dev libelf-dev libxml2-dev libostree-dev
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/root/.local/share/flatpak/exports/share
