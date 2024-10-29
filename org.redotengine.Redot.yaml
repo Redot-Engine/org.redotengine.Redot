@@ -11,35 +11,10 @@ add-extensions:
 command: redot
 
 build-options:
-  arch:
-    x86_64:
-      env:
-        # Only enable link-time optimization when targeting x86_64
-        # (causes issues on other architectures)
-        SCONS_FLAGS_EXTRA: use_lto=yes
-
   env:
     # Will be appended to the version string displayed in the editor and command-line help
     BUILD_NAME: flathub
 
-    # SCons flags common to all builds
-    # Shouldn't be quoted when used as it's a single string, not an array
-    SCONS_FLAGS: >
-      platform=linuxbsd
-      CCFLAGS=-I/app/include
-      progress=no
-      builtin_freetype=no
-      builtin_libogg=no
-      builtin_libpng=no
-      builtin_libtheora=no
-      builtin_libvorbis=no
-      builtin_libwebp=no
-      builtin_openssl=no
-      builtin_libvpx=no
-      builtin_zlib=no
-      builtin_graphite=no
-      builtin_harfbuzz=no
-      udev=no
 finish-args:
   - --share=ipc
   - --socket=wayland
