@@ -29,7 +29,6 @@ verify_sha256() {
   echo -e "\e[36mSummary of $filename:\e[0m"
   echo "URL:      $url"
   echo "SHA256:   $(sha256sum "$dir/$filename" | awk '{print $1}')"
-
 }
 
 verify_sha256 "$src_filename" "$src_url"

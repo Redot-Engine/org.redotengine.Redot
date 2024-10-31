@@ -19,13 +19,13 @@ Choose one of the following download methods:
 - **Manual Download**:
 
   Visit
-  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.1)
+  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.2)
   and download the file named `Redot-x86_64.zip`.
 
 - **Download via `curl`**:
 
   ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot-x86_64.zip > Redot-x86_64.zip
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.2/Redot-x86_64.zip > Redot-x86_64.zip
   ```
 
 **2. Install the Flatpak:**
@@ -62,13 +62,13 @@ manually by downloading the necessary files.
 - **Manual Download**:
 
   Head over to
-  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.1)
+  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.2)
   to download the `Redot.snap` file.
 
 - **Download using `curl`**:
 
   ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.1/Redot.snap > Redot.snap
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.2/Redot.snap > Redot.snap
   ```
 
 **2. Install the Snap:**

@@ -107,13 +107,13 @@ modules:
     sources:
       # Source code tarball
       - type: archive
-        sha256: 378f7805ecb5cb97fecb625fa11938c57c8d908911f6dad6b9b58e662b73f5f7
-        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/redot-4.3-beta.1.tar.gz
+        sha256: b03e48aad60dfbbcb3021cba54f969a929a886a9f5a40c0b7fed2417e95e799c
+        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/redot-4.3-beta.2.tar.gz
 
       # Binary tarball
       - type: archive
-        sha256: 758daf31d5a20bcaecb49452b6760c2bff0c6f91174146f3e815a174fedf9a94
-        url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-beta.1/Redot_v4.3-beta.1_linux.x86_64.zip
+        sha256: 05fc1b5306bfb9f8e77f3d093d9897247a44b4cd2c540275acad9fc223e1bd5c
+        url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-beta.2/Redot_v4.3-beta.2_linux.x86_64.zip
 
       - type: script
         dest-filename: redot.sh
@@ -128,13 +128,6 @@ modules:
     build-commands:
       - install -D -m755 Redot_*_linux.* /app/bin/redot-bin
       - install -D -m755 redot.sh /app/bin/redot
-      # TODO remove once rebranding is released with proper linux dist files
-      - for i in misc/dist/linux/org.godotengine.Godot.*; do
-          bn=$(basename $i);
-          ext=$(sed s/org.godotengine.Godot.// <<< $bn);
-          parendir=$(dirname $i);
-          cp $i $parendir/$FLATPAK_ID.$ext;
-        done
       - desktop-file-edit --set-icon=$FLATPAK_ID misc/dist/linux/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.desktop /app/share/applications/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.xml /app/share/mime/packages/$FLATPAK_ID.xml
