@@ -1,6 +1,8 @@
 on:
   push:
     branches: [master]
+    tags:
+      - 'v*'
   pull_request:
   workflow_dispatch:
 name: Build Packages
@@ -46,4 +48,36 @@ jobs:
         with:
           name: Redot.snap
           path: redot*.snap
+
+  release:
+    name: Create Release
+
+    needs: [flatpak, snap]
+    if: ${{ github.ref_type == 'tag' && startsWith(github.ref_name, 'v') }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Get Redot Release Tag
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION/v//}"
+          echo VERSION=${VERSION} >> $GITHUB_ENV
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            Flatpak and Snapcraft builds for Redot ${{ env.VERSION }}
+
+            - [Source code](https://github.com/Redot-Engine/redot-engine/releases/tag/redot-${{ env.VERSION }}
+            - [Snap Store](https://snapcraft.io/redot)
+            <!-- [FlatHub](https://flathub.org/apps/details/org.redotengine.Redot) -->
+          draft: false
+          prerelease: ${{ startsWith(github.ref_name, 'v') && contains(github.ref, 'beta') }}
+          files: |
+            Redot-x86_64
+            Redot.snap
 
