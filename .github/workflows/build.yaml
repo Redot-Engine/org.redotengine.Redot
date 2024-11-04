@@ -25,6 +25,13 @@ jobs:
         bundle: Redot.flatpak
         manifest-path: org.redotengine.Redot.yaml
         cache-key: flatpak-builder-${{ github.sha }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Redot.flatpak
+        path: Redot.flatpak
+
   snap:
     name: Snapcraft Build
     runs-on: ubuntu-latest
@@ -41,13 +48,15 @@ jobs:
         uses: canonical/setup-lxd@main
 
       - name: Snapcraft Build
-        run: snapcraft
+        run: |
+          snapcraft
+          mv redot_*.snap Redot.snap
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Redot.snap
-          path: redot*.snap
+          path: Redot.snap
 
   release:
     name: Create Release
@@ -61,8 +70,10 @@ jobs:
       - name: Get Redot Release Tag
         run: |
           VERSION="${{ github.ref_name }}"
-          VERSION="${VERSION/v//}"
+          VERSION="${VERSION#v}"
           echo VERSION=${VERSION} >> $GITHUB_ENV
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
@@ -72,12 +83,12 @@ jobs:
           body: |
             Flatpak and Snapcraft builds for Redot ${{ env.VERSION }}
 
-            - [Source code](https://github.com/Redot-Engine/redot-engine/releases/tag/redot-${{ env.VERSION }}
+            - [Source code](https://github.com/Redot-Engine/redot-engine/releases/tag/redot-${{ env.VERSION }})
             - [Snap Store](https://snapcraft.io/redot)
-            <!-- [FlatHub](https://flathub.org/apps/details/org.redotengine.Redot) -->
+            <!-- - [FlatHub](https://flathub.org/apps/details/org.redotengine.Redot) -->
           draft: false
           prerelease: ${{ startsWith(github.ref_name, 'v') && contains(github.ref, 'beta') }}
           files: |
-            Redot-x86_64
-            Redot.snap
+            Redot.flatpak/Redot.flatpak
+            Redot.snap/Redot.snap
 
