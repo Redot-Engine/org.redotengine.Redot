@@ -20,22 +20,21 @@ Choose one of the following download methods:
 
   Visit
   [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.3)
-  and download the file named `Redot-x86_64.zip`.
+  and download the file named `Redot.flatpak`.
 
 - **Download via `curl`**:
 
   ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.3/Redot-x86_64.zip > Redot-x86_64.zip
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.3/Redot.flatpak > Redot.flatpak
   ```
 
 **2. Install the Flatpak:**
 
-- Unzip and install the downloaded `.flatpak` file:
+- Install the downloaded `.flatpak` file:
 
-   ```bash
-   unzip Redot-x86_64.zip
-   flatpak install --user Redot-x86_64.flatpak
-   ```
+  ```bash
+  flatpak install --user Redot.flatpak
+  ```
 
 #### Updating the Flatpak Version
 
@@ -52,40 +51,22 @@ file each time a new version is released, following the above procedure.
 
 ### Snap Installation
 
-This version of Redot via Snap is not available on the Snap Store yet, but you can install it
-manually by downloading the necessary files.
+Redot is now available on the [Snap Store](https://snapcraft.io/redot). You can install it directly
+from the Snap Store.
 
 #### Steps to Install Snap Version:
 
-**1. Download the Snap Artifact:**
-
-- **Manual Download**:
-
-  Head over to
-  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-beta.3)
-  to download the `Redot.snap` file.
-
-- **Download using `curl`**:
-
-  ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-beta.3/Redot.snap > Redot.snap
-  ```
-
-**2. Install the Snap:**
+**1. Install the Snap:**
 
 - Install the Snap file by running:
 
-```bash
-sudo snap install --dangerous Redot.snap
-```
-
-The `--dangerous` flag is required because the file is manually downloaded and not from the Snap
-Store.
+  ```bash
+  sudo snap install redot
+  ```
 
 #### Updating the Snap Version
 
-For now, snap updates aren't automatic. You'll need to manually download and install the latest
-`.snap` file each time a new version is released, following the above procedure.
+Snap updates are automatic. You will receive the latest updates directly from the Snap Store.
 
 ### Choosing Between Flatpak and Snap
 
