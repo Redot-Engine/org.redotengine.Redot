@@ -85,9 +85,10 @@ jobs:
 
             - [Source code](https://github.com/Redot-Engine/redot-engine/releases/tag/redot-${{ env.VERSION }})
             - [Snap Store](https://snapcraft.io/redot)
+
             <!-- - [FlatHub](https://flathub.org/apps/details/org.redotengine.Redot) -->
           draft: false
-          prerelease: ${{ startsWith(github.ref_name, 'v') && contains(github.ref, 'beta') }}
+          prerelease: ${{ startsWith(github.ref_name, 'v') && (contains(github.ref, 'beta') || contains(github.ref, 'rc')) }}
           files: |
             Redot.flatpak/Redot.flatpak
             Redot.snap/Redot.snap
