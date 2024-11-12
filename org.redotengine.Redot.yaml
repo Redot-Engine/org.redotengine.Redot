@@ -107,13 +107,13 @@ modules:
     sources:
       # Source code tarball
       - type: archive
-        sha256: ae1afd55891536ee61eb988e05aaaf7d737d6bd4e21c131b1b5feb7f886dd14b
-        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/redot-4.3-rc.1.tar.gz
+        sha256: 9cd86b20bc581bd596c7dcfcee87fa41316a914179e5a0150e95efbec5c60ba5
+        url: https://github.com/Redot-Engine/redot-engine/archive/refs/tags/redot-4.3-rc.2.tar.gz
 
       # Binary tarball
       - type: archive
-        sha256: 7c98c3dc88e8a7a802efd4f6dc704b83935da30291291d267d7d31077301f820
-        url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-rc.1/Redot_v4.3-rc.1_linux.x86_64.zip
+        sha256: e92007003a680a703c63c112db548d5fe5227e47be5a2693275cd426fb830f72
+        url: https://github.com/Redot-Engine/redot-engine/releases/download/redot-4.3-rc.2/Redot_v4.3-rc.2_linux.x86_64.zip
 
       - type: script
         dest-filename: redot.sh

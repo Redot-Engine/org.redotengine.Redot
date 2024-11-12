@@ -19,13 +19,13 @@ Choose one of the following download methods:
 - **Manual Download**:
 
   Visit
-  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-rc.1)
+  [this release page](https://github.com/Redot-Engine/org.redotengine.Redot/releases/tag/v4.3-rc.2)
   and download the file named `Redot.flatpak`.
 
 - **Download via `curl`**:
 
   ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-rc.1/Redot.flatpak > Redot.flatpak
+  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-rc.2/Redot.flatpak > Redot.flatpak
   ```
 
 **2. Install the Flatpak:**
