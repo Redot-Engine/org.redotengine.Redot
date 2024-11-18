@@ -28,7 +28,7 @@ parts:
   redot-src:
     plugin: nil
     source: https://github.com/Redot-Engine/redot-engine.git
-    parse-info: [meta/org.redotengine.Redot.appdata.xml]
+    parse-info: [meta/org.redotengine.Redot.metainfo.xml]
     source-branch: 4.3
     override-build: |
       craftctl default
@@ -68,7 +68,7 @@ parts:
     source: .
     source-type: local
     after: [redot, redot-src]
-    parse-info: [org.redotengine.Redot.appdata.xml]
+    parse-info: [org.redotengine.Redot.metainfo.xml]
     build-environment:
       - PYTHONPATH: $CRAFT_STAGE
     override-build: |

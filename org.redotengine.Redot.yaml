@@ -123,7 +123,7 @@ modules:
           - /app/bin/redot-bin "$@"
 
       - type: file
-        path: org.redotengine.Redot.appdata.xml
+        path: org.redotengine.Redot.metainfo.xml
 
     build-commands:
       - install -D -m755 Redot_*_linux.* /app/bin/redot-bin
@@ -131,7 +131,7 @@ modules:
       - desktop-file-edit --set-icon=$FLATPAK_ID misc/dist/linux/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.desktop /app/share/applications/$FLATPAK_ID.desktop
       - install -Dm644 misc/dist/linux/$FLATPAK_ID.xml /app/share/mime/packages/$FLATPAK_ID.xml
-      - install -Dm644 $FLATPAK_ID.appdata.xml /app/share/appdata/$FLATPAK_ID.appdata.xml
+      - install -Dm644 $FLATPAK_ID.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml
       - install -Dm644 icon.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
       - >
         for size in {32,64,128,256}; do
