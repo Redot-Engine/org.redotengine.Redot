@@ -25,7 +25,7 @@ Choose one of the following download methods:
 - **Download via `curl`**:
 
   ```bash
-  curl https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-stable/Redot.flatpak > Redot.flatpak
+  curl -L https://github.com/Redot-Engine/org.redotengine.Redot/releases/download/v4.3-stable/Redot.flatpak > Redot.flatpak
   ```
 
 **2. Install the Flatpak:**
